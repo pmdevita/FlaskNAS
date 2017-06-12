@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>{{ v.name }}</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/login.js"></script>
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
+</head>
+
+<body>
+  <div class="login-navbar-wrapper">
+    <nav class="navbar navbar-light bg-faded" id="login-nav">
+      <h1 class="navbar-brand mb-0">{{ v.name }}</h1>
+    </nav>
+    <div class="alert alert-danger collapse" id="login-error">
+      <strong>Oops!</strong> Username/Password incorrect.
+    </div>
+  </div>
+  <div id="login-container">
+
+
+    <div class="login-box">
+      <h1>Login</h1>
+      <form>
+        <div class="form-fields">
+          <input type="text" name="username" placeholder="Username" size="25"><br>
+          <input type="password" name="password" placeholder="Password" size="25"><br>
+          <label class="form-check-label">
+      <input class="form-check-input" type="checkbox" value="" name="remember"> Remember me
+    </label><br />
+        </div>
+        <button class="btn btn-primary" type="submit">Sign in<svg class="spinner" style="display: none;" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108.5 89.5" version="1.1"><style>.s0{fill:none;stroke-linecap:round;stroke-width:5.8;stroke:white;}</style><g transform="translate(-293.92931,-378.72115)"><circle cx="348.5" cy="423.5" r="41.8" style="fill:none;stroke-width:5.8;stroke:white;"/><path d="m389.4 429c-9.5-12.9-9-12.7-9-12.7M316.1 431.3 316.1 431.3 316.1 431.3 316.1 431.3 316.1 431.3 316.1 431.3 316.1 431.3 316.1 431.3c-9.5-12.9-9-12.7-9-12.7M389.7 429.5c10-12.5 9.9-12 9.9-12M296.8 430.5c10-12.5 9.9-12 9.9-12" class="s0"/></g></button>
+      </form>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

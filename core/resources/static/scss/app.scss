@@ -1,0 +1,214 @@
+@import "bootstrap/bootstrap";
+
+$offwhite: #efefef;
+$bordercolor: #828282;
+$activecolor: #76A441;
+
+// Main
+.page {
+  display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.files {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0px;
+  flex-direction: column;
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  };
+}
+
+.files-sidebar {
+  display: flex;
+  flex-shrink: 0;
+  border-color: $bordercolor;
+  border-width: 1px;
+  min-height: 0;
+  @include media-breakpoint-up(md) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right-style: solid;
+  };
+  @include media-breakpoint-down(sm) {
+    flex-direction: row;
+    width: 100%;
+    border-bottom-style: solid;
+    overflow-x: auto;
+  };
+  .files-shares {
+    flex-direction: row;
+    @include media-breakpoint-up(md) {
+      flex-direction: column;
+      padding: .4rem;
+    };
+    @include media-breakpoint-down(sm) {
+      margin: auto;
+      //width: 100%;
+    };
+    li {
+      @include media-breakpoint-down(sm) {
+        margin: auto;
+      };
+    }
+    .active {
+      @extend .active;
+      border-color: $activecolor;
+      @include media-breakpoint-up(md) {
+        border-right-style: solid;
+      };
+      @include media-breakpoint-down(sm) {
+        border-bottom-style: solid;
+      };
+    }
+  }
+}
+
+.files-view {
+  //background-color: $offwhite;
+  width: 100%;
+  //height: 100%;
+  .files-path {
+    @extend .breadcrumb;
+    border-radius: 0;
+    background-color: white;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: $bordercolor;
+    margin-bottom: 0;
+    li.active a {
+      pointer-events: none;
+      color: inherit;
+      text-decoration: none;
+    }
+    @include media-breakpoint-down(sm) {
+      overflow-x: auto;
+    };
+  }
+  .files-path-hide {
+    padding: 0;
+  }
+  .files-table {
+    overflow-y: auto;
+    table {
+      @extend .table-striped;
+      @extend .table-bordered;
+      @extend .table-hover;
+      #files-table-date {
+        width: 25%;
+      }
+      #files-table-size {
+        width: 20%;
+      }
+      td {
+        @extend .text-nowrap;
+        max-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor:pointer;
+      }
+      tr td:first-child {
+        padding-left: 3em;
+      }
+      .icon-folder {
+        margin-left: -2.5em;
+        margin-right: .5em;
+        height: 2em;
+        width: 2em;
+      }
+
+    }
+
+  }
+}
+
+
+.main-navbar {
+  @extend .navbar;
+  @extend .navbar-toggleable-sm;
+  flex: none;
+}
+
+.navbar-wrapper {
+  //display: flex;
+  //justify-content: space-between;
+
+}
+
+.navbar-right {
+  @include media-breakpoint-up(md) {
+      margin-left: auto;
+  }
+}
+
+//Login page
+.login-navbar-wrapper {
+  position: absolute;
+  width: 100%;
+  align-self: flex-start;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+}
+
+html, body, #login-container {
+  height: 100%;
+}
+
+#login-error {
+  align-self: center;
+}
+
+#login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: flex-start;
+}
+
+.login-box {
+  //box-sizing: border-box;
+  background-color: $offwhite;
+  padding: 1em;
+  border-radius: .5em;
+  text-align: center;
+  align-self: center;
+  line-height: 2em;
+  @include media-breakpoint-down(sm) {
+    font-size: 1.1rem;
+  }
+
+  .form-fields {
+    text-align: left;
+  }
+  button {
+    text-align: center;
+  }
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
+}
+
+$spinner-size: 2rem;
+$spinner-botmarg: $spinner-size / -4;
+
+.spinner-on {
+  display: inline !important;
+  margin-left: $spinner-size / 5;
+  margin-bottom: $spinner-botmarg;
+  width: $spinner-size;
+  height: $spinner-size;
+  animation: spin 2s linear infinite;
+}
