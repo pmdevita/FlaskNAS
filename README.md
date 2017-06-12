@@ -10,6 +10,7 @@ access to files through the web.
 
 ##### Requirements:
 - Linux (Debian-based currently, more support later)
+- Python 3.5+
 - Samba
 - Netatalk 3+/Avahi (optional, needed for Mac support)
 - WSGI solution (uWSGI + NGINX, Gunicorn, etc.) (not setup to handle yet)
