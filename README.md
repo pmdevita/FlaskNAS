@@ -24,10 +24,13 @@ access to files through the web.
 - ~~Basic file interface functionality~~
 - Backend controls for Samba
 - Frontend controls for Samba
+- Backend user management
+- Frontend user management
+- Plugin support 
 
 ##### Other stuff:
-- FlaskNAS is built with Flask, Bootstrap, JQuery, argon2, and
-python-reconfigure.
+- FlaskNAS is built with Flask, Bootstrap, JQuery, argon2,
+python-reconfigure, and virtualenv.
 
 ##### Lowest recommended specs (specs subject to change during development)
  - 256MB of RAM
