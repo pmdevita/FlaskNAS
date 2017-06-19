@@ -9,18 +9,18 @@ class InvalidPath(Exception):
 
 
 class Files:
-    def __init__(self, root):
-        self.root = Path(root)
-        self.tree = list(os.walk(self.root))
+    def __init__(self, config):
+        self._config = config
+        # self.tree = list(os.walk(self._config["rootpath"]))
 
     def list_shares(self):
-        return self._get_files_folders(self.root)[0]
+        return self._get_files_folders(self._config["rootpath"])[0]
 
     def get_listing(self, path):
-        if not validate_path(self.root, path):
+        if not validate_path(self._config["rootpath"], path):
             print('invalid path')
             raise InvalidPath
-        path = os.path.join(self.root, path)
+        path = os.path.join(self._config["rootpath"], path)
         print(os.path.isdir(path))
         if not os.path.isdir(path):
             raise InvalidPath

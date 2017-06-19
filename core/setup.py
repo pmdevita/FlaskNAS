@@ -60,17 +60,6 @@ def envsetup(path="."):
     result = Popen([os.path.join(path, VE_NAME, "bin/pip"), "install"] + packages)
     result.wait()
 
-def generate_config(file=SETTINGS, _exit=True):
-    config = {
-        "rootdir": "",
-        "hostname": os.uname()[1]
-    }
-    with open("settings.json", "w") as f:
-        json.dump(config, f, indent=4, sort_keys=True)
-    print("Default configuration dumped, customize and relaunch")
-    if _exit:
-        exit()
-
 def test(path):
     print("Installing packages in virtualenv")
     result = Popen([os.path.join(path, VE_NAME, "bin/pip"), "install"] + packages)

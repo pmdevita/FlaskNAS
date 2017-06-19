@@ -182,9 +182,10 @@ html, body, #login-container {
   text-align: center;
   align-self: center;
   line-height: 2em;
-  @include media-breakpoint-down(sm) {
-    font-size: 1.1rem;
-  }
+  font-size: 1.1rem;
+  // @include media-breakpoint-down(sm) {
+  //   font-size: 1.1rem;
+  // }
 
   .form-fields {
     text-align: left;

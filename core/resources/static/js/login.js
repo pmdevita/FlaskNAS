@@ -6,8 +6,9 @@ $(function(){
     $(".spinner").addClass("spinner-on")
 
     form = $("form").serializeArray();
+    form.push({"name":"point", "value": "login"});
 
-    $.post("login", form, function(data, status){
+    $.post("api", form, function(data, status){
       response = data;
 
       if (response["Response"] == "Error") {

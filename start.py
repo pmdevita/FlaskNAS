@@ -51,25 +51,11 @@ def setup():
     # from core.setup import install
     # install()
 
-    if not os.path.isfile(consts.SETTINGS):
-        if __name__ == "__main__":
-            # intialize virtualenv
-            from core.setup import install, generate_config
-            # skipping this for now
-            #install()
-            generate_config()
-        else:
-            Exception("Not installed yet, run start.py by itself, without WSGI")
-
+    # import core.database
+    # core.database.test()
     run()
 
 def run():
-    with open(consts.SETTINGS) as f:
-        config = json.load(f)
-
-    from core.utils import validate_config
-    if not validate_config(config):
-        Exception("Invalid config")
     from core import main
     if __name__ == "__main__":
         main.debugrun(debug=True)

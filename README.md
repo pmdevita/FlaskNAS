@@ -1,4 +1,4 @@
-# FlaskNAS Manager (.1 alpha)
+# FlaskNAS Manager (.3 alpha)
 Web-based interface for accessing and managing network shares.
 
 Frustrated with other NAS software's high spec requirements and the need
@@ -26,7 +26,9 @@ access to files through the web.
 - Frontend controls for Samba
 - Backend user management
 - Frontend user management
-- Plugin support 
+###### Future:
+- Quota support
+- Plugin support
 
 ##### Other stuff:
 - FlaskNAS is built with Flask, Bootstrap, JQuery, argon2,
@@ -47,4 +49,10 @@ Will change in future updates
 
  1. Download and unpackage to writable directory
  2. Run start.py as root to turn on debug server
+
+#### Changelog:
+v.3
+ - Users now in a database, Samba config ORM added, setup page created, groundwork for next update
+v.1
+ - Basic file browsing and login capabilities
 
