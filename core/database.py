@@ -57,7 +57,6 @@ class Users:
         with db_session:
             user = select(u for u in User if u.username == username)[:]
         if len(user) == 1:
-            print(self._password.to_hash(password, user[0].salt)[0], user[0].password)
             if self._password.to_hash(password, user[0].salt)[0] == user[0].password:
                 return True
             else:
