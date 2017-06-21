@@ -15,7 +15,7 @@ $activecolor: #76A441;
 .files {
   display: flex;
   flex: 1;
-  overflow-y: auto;
+  overflow-y: hidden;
   min-height: 0px;
   flex-direction: column;
   @include media-breakpoint-up(md) {
@@ -72,6 +72,9 @@ $activecolor: #76A441;
 .files-view {
   //background-color: $offwhite;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   //height: 100%;
   .files-path {
     @extend .breadcrumb;
@@ -80,7 +83,9 @@ $activecolor: #76A441;
     border-bottom-style: solid;
     border-width: 1px;
     border-color: $bordercolor;
+
     margin-bottom: 0;
+    flex-shrink: 0;
     li.active a {
       pointer-events: none;
       color: inherit;
@@ -94,11 +99,16 @@ $activecolor: #76A441;
     padding: 0;
   }
   .files-table {
+    display: flex;
     overflow-y: auto;
+    height: auto;
+
     table {
       @extend .table-striped;
       @extend .table-bordered;
       @extend .table-hover;
+      margin-bottom: 0;
+
       #files-table-date {
         width: 25%;
       }
@@ -121,7 +131,6 @@ $activecolor: #76A441;
         height: 2em;
         width: 2em;
       }
-
     }
 
   }

@@ -21,7 +21,6 @@ class Files:
             print('invalid path')
             raise InvalidPath
         path = os.path.join(self._config["rootpath"], path)
-        print(os.path.isdir(path))
         if not os.path.isdir(path):
             raise InvalidPath
         children = self._get_files_folders(path)

@@ -8172,7 +8172,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .files {
   display: flex;
   flex: 1;
-  overflow-y: auto;
+  overflow-y: hidden;
   min-height: 0px;
   flex-direction: column;
 }
@@ -8250,6 +8250,9 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 
 .files-view {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .files-view .files-path {
@@ -8259,6 +8262,7 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
   border-width: 1px;
   border-color: #828282;
   margin-bottom: 0;
+  flex-shrink: 0;
 }
 
 .files-view .files-path li.active a {
@@ -8278,7 +8282,13 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 }
 
 .files-view .files-table {
+  display: flex;
   overflow-y: auto;
+  height: auto;
+}
+
+.files-view .files-table table {
+  margin-bottom: 0;
 }
 
 .files-view .files-table table #files-table-date {

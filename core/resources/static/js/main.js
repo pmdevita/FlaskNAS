@@ -109,7 +109,7 @@ Table.prototype = {
       this.root.append($("<tr>").append(          //<tr>
         $("<td>").text(data[1][i][0])).append(    //  <td>Name</td>
           $("<td>").text(FormatDate(data[1][i][1]))).append(  //  <td>Date</td>
-            $("<td>").text(data[1][i][2])));      //  <td>Size</td>
+            $("<td>").text(FormatSize(data[1][i][2]))));      //  <td>Size</td>
     }
     // callback for folders
     $(".files-table .files-folder").on("click", function(event) {
@@ -126,8 +126,6 @@ function showListing(data, status) {
   // clear current file list
   filetable.clear();
   filetable.addFoldersFiles(data);
-
-
 }
 
 function TextToShare(text) {
@@ -169,11 +167,18 @@ function shareSetup(data, status) {
 function FormatDate(seconds) {
   d = new Date(seconds * 1000);
   dstr = d.toLocaleString();
-  console.log(dstr);
   date = dstr.slice(0, dstr.indexOf(",")) +
           dstr.slice(dstr.indexOf(",") + 1,  dstr.lastIndexOf(":")) +
           " " + dstr.slice(-2);
   return date;
+}
+
+function FormatSize (bytes) {
+  places = ["B", "KB", "MB", "GB", "TB", "PB"]
+  length = bytes.toString().length - 1;
+  place = (length - (length % 3)) / 3;
+  size = Math.round(bytes / 10 ** (length - 2)) / 10 ** (2 - length % 3);
+  return size.toString() + " " + places[place];
 }
 
   //Download shares list and setup
