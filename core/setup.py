@@ -3,7 +3,7 @@ import json
 import sys
 import shutil
 from subprocess import Popen
-from core.constants import VE_NAME, packages, SETTINGS
+from core.constants import VE_NAME, packages
 import re
 
 def install():
