@@ -134,14 +134,4 @@ def _user_op(user):
     return False
 
 
-def test():
-    print("running now")
-    u = Users()
-    status = u.login("asdf", "asdf")
-    # u.create_first_user("asdf", "asdf")
-    print("get", u.get("aqwerrw"))
-    print("get", u.get("asdf"))
-    from core import services
-    services.test()
-
 

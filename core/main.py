@@ -1,5 +1,6 @@
 print("importing flask")
 from flask import Flask, send_from_directory, redirect, url_for, request, session, render_template, jsonify, make_response
+from flask_session import Session
 print("flask imported")
 from core import constants as consts
 from core import database
@@ -12,6 +13,26 @@ resourcespath = os.path.abspath("core/resources")
 app = Flask(__name__, template_folder=os.path.join(resourcespath, "templates"))
 app.secret_key = consts.secretkey()
 
+# Is Redis available?
+app.config["SESSION_TYPE"] = "filesystem"
+try:
+    import redis
+    app.config["SESSION_TYPE"] = "redis"
+except ImportError:
+    pass
+
+# Try to load Redis config
+if app.config["SESSION_TYPE"] == "redis":
+    print("Enabling Redis")
+    try:
+        with open(consts.REDIS, "r") as f:
+            redis_settings = json.load(f)
+        app.config["SESSION_REDIS"] = redis.StrictRedis(host=redis_settings['host'], port=redis_settings['port'])
+    except FileNotFoundError:
+        app.config["SESSION_REDIS"] = redis.StrictRedis()
+
+Session(app)
+
 users = database.Users()
 shares = database.Shares()
 
@@ -20,14 +41,13 @@ class WebConsts:
 
 # First time login activated by choosing login template, which triggers correct API endpoints
 # to finish setup
-global login_page
 login_page = "login.html"
 if users.no_users:
     login_page = "first_login.html"
     import platform
     WebConsts.hostname = platform.uname()[1]
 
-# We cannot initalize files with path because path may not be available right now
+# We cannot initialize files with path because path may not be available right now
 config = Config()
 files = Files(config)
 
@@ -38,6 +58,7 @@ def root():
     if "username" in session:
         return render_template("index.html", v=WebConsts, user=session["username"])
     else:
+        global login_page
         return render_template(login_page, v=WebConsts)
         # return redirect(url_for("login"))
 
@@ -109,9 +130,10 @@ def catch_all(path):
         r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
-
-def debugrun(debug=False):
+def start(debug=False):
     print("starting flask")
     if debug:
         app.debug = True
-    app.run(host="0.0.0.0")
+        app.run(host="0.0.0.0")
+    else:
+        return app

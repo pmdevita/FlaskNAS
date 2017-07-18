@@ -31,8 +31,8 @@ access to files through the web.
 - Plugin support
 
 ##### Other stuff:
-- FlaskNAS is built with Flask, Bootstrap, JQuery, argon2,
-python-reconfigure, and virtualenv.
+- FlaskNAS is built with Flask, Bootstrap, JQuery, argon2, virtualenv,
+and PonyORM.
 
 ##### Lowest recommended specs (specs subject to change during development)
  - 256MB of RAM
@@ -53,6 +53,7 @@ Will change in future updates
 #### Changelog:
 v.3
  - Users now in a database, Samba config ORM added, setup page created, groundwork for next update
+
 v.1
  - Basic file browsing and login capabilities
 

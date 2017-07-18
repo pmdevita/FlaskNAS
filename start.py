@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-import os
+import os, sys
 
 """
 start.py
@@ -16,18 +16,15 @@ if os.geteuid() != 0:
     print("Run as root")
     exit()
 
-from core.utils import versioncheck
-versioncheck()
+
+if sys.version_info[0] < 3:
+    print("Must be using Python 3")
+    exit()
+
 
 print("Peter's NAS Manager")
 
-#
-# Initialize or setup environment
-#
-
 import core.constants as consts
-import json
-
 
 def activateve():
     # Activate virtualenv
@@ -53,19 +50,24 @@ def setup():
 
     # import core.database
     # core.database.test()
-    run()
 
-def run():
+def run(debug=False):
     from core import main
-    if __name__ == "__main__":
-        main.debugrun(debug=True)
+    if debug:
+        main.start(debug=debug)
+    else:
+        return main.start()
 
-if __name__ == "__main__":
+app = None
+
+if __name__ == "__main__":  # Started by script itself
     if True:
         print("full setup")
         setup()
     else:
         activateve()
-        run()
-
+    run(debug=True)
+    exit()
+else:                       # Started by WSGI server
+    app = run()
 

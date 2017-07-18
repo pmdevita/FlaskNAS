@@ -1,11 +1,6 @@
 import sys
 import os
 
-def versioncheck():
-    if sys.version_info[0] < 3:
-        print("Must be using Python 3")
-        exit()
-
 def sourceforge_download(link):
     import urllib
     urllib.request.urlopen()

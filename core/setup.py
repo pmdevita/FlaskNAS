@@ -45,7 +45,7 @@ def envsetup(path="."):
         else:
             exit()
 
-    print("Checking for virtualenv")
+    # We need virtualenv to be installed to continue
     try:
         import virtualenv
     except ImportError:
@@ -59,23 +59,4 @@ def envsetup(path="."):
     print("Installing packages in virtualenv")
     result = Popen([os.path.join(path, VE_NAME, "bin/pip"), "install"] + packages)
     result.wait()
-
-def test(path):
-    print("Installing packages in virtualenv")
-    result = Popen([os.path.join(path, VE_NAME, "bin/pip"), "install"] + packages)
-    result.wait()
-
-class tempinstall:
-    def __init__(self, packages):
-        self.packages = []
-        for i in packages:
-            if not package_installed(i):
-                self.packages
-
-def build_netatalk(buildfolder=None):
-    if not buildfolder:
-        buildfolder = "netatalkbuild"
-
-    os.mkdir(buildfolder)
-    os.chdir(buildfolder)
 

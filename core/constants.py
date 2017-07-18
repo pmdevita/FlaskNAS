@@ -4,6 +4,7 @@ VE_NAME = "NAS-ve"
 # SETTINGS = "settings.json"
 CONFIG = "config.json"
 LOGINS = "logins.json"
+REDIS = "redis.json"
 SHARES = "shares.db"
 
 #SAMBA = "/etc/samba/smb.conf"
@@ -34,7 +35,7 @@ SAMBA_DEFAULT_SHARE = {
 }
 
 
-packages = ["sh", "reconfigure", "flask", "argon2", "pony"]
+packages = ["sh", "reconfigure", "flask", "Flask-Session", "argon2", "pony", "uwsgi"]
 debug = True
 argon_settings = {"t": 1000, "m": 12, "p": 1}
 directory_caching = 1
