@@ -44,7 +44,7 @@ db.generate_mapping(create_tables=True)
 
 class Users:
     def __init__(self):
-        self._password = Login(db=True)
+        # self._password = User(db=True)
         with db_session:
             users = select(u for u in User)[:]
 
