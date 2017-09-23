@@ -43,9 +43,8 @@ directory_caching = 1
 
 
 
-# STUFF NOT TO BE PUT ONLINE
+# Make this unique, probably write a thing to grab it from random.org
 rawsecretkey = "39 126  97  73 192  92 185  92 114 246 133 159 119 254  28  71 185 211  30 138  64 187  61  89"
-# END OF STUFF
 
 def secretkey():
     key = []

@@ -8,6 +8,7 @@ class Config:
                     self._config = json.load(f)
             except FileNotFoundError:
                 self._config = {}
+            self.keys = self._config.keys
 
     def _save(self):
         with open(consts.CONFIG, "w") as f:

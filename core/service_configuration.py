@@ -139,7 +139,7 @@ class ConfigDict:
 
 
 
-class Samba:
+class SambaCFG:
     """
     Parses the Samba configuration to create an interface to it to provide viewing and editing
     """
@@ -242,10 +242,9 @@ class Samba:
 
 
 if __name__ == "__main__":
-    s = Samba("samba.txt")
+    s = SambaCFG("samba.txt")
     pprint(s.config["[homes]"]._list)
 
-    s.config["[homes]"]["chelsea"] = "cool"
     s.config["[homes]"]["peter has something to say"] = "having a house would be really nice i think"
     s.save("newsamba.txt")
     # for i in s.config:

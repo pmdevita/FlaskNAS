@@ -1,8 +1,9 @@
 import os
 from pony.orm import *
 import core.constants as consts
-from core.login import Login
-from core.service_configuration import Samba, ConfigDict
+from core.login import to_hash
+from core.service_configuration import SambaCFG, ConfigDict
+from core.service_control import Samba
 
 READWRITE = "readwrite"
 READ = "read"
@@ -57,7 +58,7 @@ class Users:
         with db_session:
             user = select(u for u in User if u.username == username)[:]
         if len(user) == 1:
-            if self._password.to_hash(password, user[0].salt)[0] == user[0].password:
+            if to_hash(password, user[0].salt)[0] == user[0].password:
                 return True
             else:
                 return False
@@ -66,16 +67,18 @@ class Users:
 
     def create_user(self, current_user, new_user, password):
         if _user_op(current_user):
-            phash, salt = self._password.to_hash(password)
+            phash, salt = to_hash(password)
             with db_session:
                 User(username=new_user, salt=salt, password=phash, op=False)
+            Samba.change_password(new_user, password)
 
     def create_first_user(self, new_user, password):
         if not self.no_users:
             raise Exception("There are users, no need to make a first account")
-        phash, salt = self._password.to_hash(password)
+        phash, salt = to_hash(password)
         with db_session:
             User(username=new_user, salt=salt, password=phash, op=True)
+        Samba.change_password(new_user, password)
 
     def get(self, current_user):
         if _user_op(current_user):
@@ -97,13 +100,13 @@ class Shares:
                 self._new_config()
         except FileNotFoundError:   # Config doesn't exist
             self._new_config()
-        self._samba = Samba(self.path)
+        self._samba = SambaCFG(self.path)
         self.global_config = self._samba.config["[global]"]
 
     def _new_config(self):
         with open(self.path, "w") as f:
             f.write(consts.SAMBA_FILETAG)
-        s = Samba(self.path)
+        s = SambaCFG(self.path)
         s.config.update(consts.SAMBA_DEFAULT_CONFIG)
         s.save()
 

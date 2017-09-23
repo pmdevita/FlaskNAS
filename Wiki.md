@@ -48,35 +48,25 @@ following commands. The defaults utils/install_server.sh gives are fine.
     sudo make install
     sudo utils/install_server.sh
 
-##### Step 2: Install redis-py
+##### Step 2: Configure FlaskNAS
 
-CD to the directory FlaskNAS is located at and run
+Open the config.json file in the FlaskNAS directory and add the following key
 
-    NAS-ve/bin/pip install redis
+    "redis": {}
 
-Restart FlaskNAS or continue to the optional third step
+You can manually define host and port like this
 
-##### (Optional) Step 3: Configure FlaskNAS
-
-If you are not using Redis's default settings or you are running the
-server on a different machine on the network, create a file named
-"redis.json" with the following contents.
-
-    {
-      "host": "localhost",
-      "port": 6379
-    }
-
-Change host and port to match your Redis server.
-
-Restart FlaskNAS.
+    "redis: {"host": "127.0.0.1", "port": 5555}
+    
+FlaskNAS should automagically install the redis extension to it's virtualenv and
+use redis from there.
 
 ###### Sources:
 
 https://redis.io/topics/quickstart
 http://grainier.net/how-to-install-redis-in-ubuntu/
 
-#### Architecture Documentation:
-Login:
-HTTPS must be supplied by web server. Other than that, NAS uses argon2 for
-password hashing and server-side sessions for best security.
+#### uWSGI + Nginx
+
+For best performance, you can use uWSGI and Nginx instead of the Flask
+debug server.

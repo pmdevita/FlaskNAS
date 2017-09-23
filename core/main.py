@@ -1,5 +1,6 @@
 print("importing flask")
-from flask import Flask, send_from_directory, redirect, url_for, request, session, render_template, jsonify, make_response
+from flask import Flask, send_from_directory, redirect, url_for, request, session, render_template, jsonify, \
+    make_response
 from flask_session import Session
 print("flask imported")
 from core import constants as consts
@@ -13,23 +14,25 @@ resourcespath = os.path.abspath("core/resources")
 app = Flask(__name__, template_folder=os.path.join(resourcespath, "templates"))
 app.secret_key = consts.secretkey()
 
-# Is Redis available?
-app.config["SESSION_TYPE"] = "filesystem"
-try:
-    import redis
-    app.config["SESSION_TYPE"] = "redis"
-except ImportError:
-    pass
+def _redis_check(v):
+    # Is Redis available?
+    app.config["SESSION_TYPE"] = "filesystem"
+    if "redis" in config.keys():
+        v.update(["redis"])
+        try:
+            import redis
+            app.config["SESSION_TYPE"] = "redis"
+        except ImportError:
+            pass
 
-# Try to load Redis config
-if app.config["SESSION_TYPE"] == "redis":
-    print("Enabling Redis")
-    try:
-        with open(consts.REDIS, "r") as f:
-            redis_settings = json.load(f)
-        app.config["SESSION_REDIS"] = redis.StrictRedis(host=redis_settings['host'], port=redis_settings['port'])
-    except FileNotFoundError:
-        app.config["SESSION_REDIS"] = redis.StrictRedis()
+        # Try to load Redis config
+        if app.config["SESSION_TYPE"] == "redis":
+            print("Enabling Redis")
+            manual = False
+            if "host" in config['redis'].keys() or "port" in config['redis'].keys():
+                manual = True
+            app.config["SESSION_REDIS"] = redis.StrictRedis(host=config["redis"].get('host', "localhost"),
+                                                            port=config["redis"].get('port', 6379))
 
 Session(app)
 
@@ -52,7 +55,6 @@ config = Config()
 files = Files(config)
 
 
-
 @app.route("/")
 def root():
     if "username" in session:
@@ -71,7 +73,7 @@ def logout():
 @app.route("/api/<path:path>",  methods=["POST"])
 def api(path=None):
     # path = path.split()
-    if "username" in session:
+    if "username" in session:   # If we are logged in, normal operations are available
         # File Access
         if request.form.get("point", None) == "files":
             if request.form.get("what", None) == "shares":
@@ -89,7 +91,7 @@ def api(path=None):
         elif request.form.get("point", None) == "logout":
                 session.pop('username', None)
                 return redirect(url_for('root'))
-    else:
+    else:                       # Otherwise, only the login api is available
         # Login
         global login_page
         if request.form.get("point", None) == "login" and "username" in request.form and "password" in request.form:
@@ -117,7 +119,7 @@ def api(path=None):
     return 400
     
 
-# Resources (probably not necessary in production)
+# Resources (not necessary in production since it will be provided by NGINX)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
@@ -130,8 +132,10 @@ def catch_all(path):
         r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
-def start(debug=False):
+def start(venv, debug=False):
     print("starting flask")
+    _redis_check(venv)
+
     if debug:
         app.debug = True
         app.run(host="0.0.0.0")
