@@ -12,7 +12,7 @@ import os, json
 
 resourcespath = os.path.abspath("core/resources")
 app = Flask(__name__, template_folder=os.path.join(resourcespath, "templates"))
-app.secret_key = consts.secretkey()
+app.config["SECRET_KEY"] = consts.secretkey()
 
 def _redis_check(v):
     # Is Redis available?
@@ -34,7 +34,6 @@ def _redis_check(v):
             app.config["SESSION_REDIS"] = redis.StrictRedis(host=config["redis"].get('host', "localhost"),
                                                             port=config["redis"].get('port', 6379))
 
-Session(app)
 
 users = database.Users()
 shares = database.Shares()
@@ -135,7 +134,7 @@ def catch_all(path):
 def start(venv, debug=False):
     print("starting flask")
     _redis_check(venv)
-
+    Session(app)
     if debug:
         app.debug = True
         app.run(host="0.0.0.0")

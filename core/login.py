@@ -6,7 +6,7 @@ def to_hash(password, salt=None):
     if not salt:
         salt = os.urandom(20)
 
-    phash = argon2.argon2_hash(password=string, salt=salt, t=argon_settings["t"],
+    phash = argon2.argon2_hash(password=password, salt=salt, t=argon_settings["t"],
                      m=argon_settings["m"], p=argon_settings["p"])
 
     return [phash, salt]
